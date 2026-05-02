@@ -1,0 +1,42 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<div class="container" >
+    <div class="card" style="width: 35vw;">
+        <h2>Create Task for <%= project.name %></h2>
+        <form action="/projects/<%= project._id %>/tasks" method="POST" style="margin-top: 20px;">
+            <div class="form-group">
+                <label for="title">Task Title</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="dueDate">Due Date</label>
+                <input type="date" id="dueDate" name="dueDate">
+            </div>
+            <div class="form-group">
+                <label for="priority">Priority</label>
+                <select id="priority" name="priority">
+                    <option value="Low">Low</option>
+                    <option value="Medium" selected>Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="assignedTo">Assign To</label>
+                <select id="assignedTo" name="assignedTo">
+                    <% project.members.forEach(member => { %>
+                        <option value="<%= member._id %>"><%= member.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <button type="submit" class="btn">Create Task</button>
+            <a href="/projects/<%= project._id %>" class="btn btn-danger" style="margin-left: 10px;">Cancel</a>
+        </form>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

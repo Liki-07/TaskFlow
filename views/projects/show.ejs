@@ -1,0 +1,115 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<div class="container" style="display: block;">
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <div>
+            <h1><%= project.name %></h1>
+            <p style="color:#666;"><%= project.description %></p>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+            <% if (isAdmin) { %>
+                <div>
+
+                    <a href="/projects/<%= project._id %>/edit" class="btn btn-edit" >Edit</a>
+                </div>
+                <form action="/projects/<%= project._id %>?_method=DELETE" method="POST" style="display:inline;">
+                    <button class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this project? All tasks will be lost.');">Delete</button>
+                </form>
+                <a href="/projects/<%= project._id %>/members" class="btn">Manage Members</a>
+                <a href="/projects/<%= project._id %>/tasks/new" class="btn">+ Add Task</a>
+            <% } %>
+        </div>
+    </div>
+
+    <h2>Task Board</h2>
+
+    <div class="task-board">
+
+        <!-- TO DO -->
+        <div class="task-column">
+            <h3>To Do</h3>
+            <% groupedTasks.todo.forEach(task => { %>
+                <div class="task-card">
+
+                    <h4><%= task.title %></h4>
+                    <p><%= task.description %></p>
+
+                    <p>
+                        <strong>Priority:</strong>
+                        <span style="color:<%= task.priority === 'High' ? 'red' : task.priority === 'Medium' ? 'orange' : 'green' %>">
+                            <%= task.priority %>
+                        </span>
+                    </p>
+
+                    <p><strong>Assigned:</strong> <%= task.assignedTo?.name || 'Unassigned' %></p>
+
+                    <p>
+                        <strong>Due:</strong>
+                        <%= new Date(task.dueDate).toDateString() %>
+                    </p>
+
+                    <% if (new Date(task.dueDate) < new Date() && task.status !== 'Done') { %>
+                        <p style="color:red;">⚠ Overdue</p>
+                    <% } %>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <% if (isAdmin || task.assignedTo?._id.toString() === user._id.toString()) { %>
+                            <div>
+
+                                <a href="/tasks/<%= task._id %>/edit" class="btn btn-edit">Edit</a>
+                            </div>
+                        <% } %>
+
+                        <% if (isAdmin) { %>
+                            <form action="/tasks/<%= task._id %>?_method=DELETE" method="POST">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        <% } %>
+                    </div>
+
+                </div>
+            <% }) %>
+        </div>
+
+        <!-- IN PROGRESS -->
+        <div class="task-column">
+            <h3>In Progress</h3>
+            <% groupedTasks.inProgress.forEach(task => { %>
+                <div class="task-card">
+
+                    <h4><%= task.title %></h4>
+                    <p><%= task.description %></p>
+
+                    <p><strong>Assigned:</strong> <%= task.assignedTo?.name || 'Unassigned' %></p>
+
+                    <% if (isAdmin || task.assignedTo?._id.toString() === user._id.toString()) { %>
+                        <a href="/tasks/<%= task._id %>/edit" class="btn btn-edit">Edit</a>
+                    <% } %>
+
+                </div>
+            <% }) %>
+        </div>
+
+        <!-- DONE -->
+        <div class="task-column">
+            <h3>Done</h3>
+            <% groupedTasks.done.forEach(task => { %>
+                <div class="task-card" style="opacity:0.6;">
+
+                    <h4><del><%= task.title %></del></h4>
+                    <p><%= task.description %></p>
+
+                    <p><strong>Assigned:</strong> <%= task.assignedTo?.name || 'Unassigned' %></p>
+
+                </div>
+            <% }) %>
+        </div>
+
+    </div>
+
+</div>
+
+<%- include('../partials/footer') %>

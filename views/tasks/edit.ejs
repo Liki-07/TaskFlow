@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<div class="container" >
+    <div class="card" style="width: 35vw;">
+        <h2>Edit Task</h2>
+        <form action="/tasks/<%= task._id %>?_method=PUT" method="POST" style="margin-top: 20px;">
+            <div class="form-group">
+                <label for="title">Task Title</label>
+                <input type="text" id="title" name="title" value="<%= task.title %>" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="3"><%= task.description %></textarea>
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status" name="status">
+                    <option value="To Do" <%= task.status === 'To Do' ? 'selected' : '' %>>To Do</option>
+                    <option value="In Progress" <%= task.status === 'In Progress' ? 'selected' : '' %>>In Progress</option>
+                    <option value="Done" <%= task.status === 'Done' ? 'selected' : '' %>>Done</option>
+                </select>
+            </div>
+            <button type="submit" class="btn">Update Task</button>
+            <a href="/projects/<%= task.project %>" class="btn btn-danger" style="margin-left: 10px;">Cancel</a>
+        </form>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

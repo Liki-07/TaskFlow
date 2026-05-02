@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<div class="container" style="display: block;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1>Projects</h1>
+        <a href="/projects/new" class="btn">Create Project</a>
+    </div>
+
+    <% if (projects.length === 0) { %>
+        <p>No projects found. <a href="/projects/new">Create one!</a></p>
+    <% } else { %>
+        <div class="dashboard-grid">
+            <% projects.forEach(project => { %>
+                <div class="card" style="transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='8px 8px 0px 0px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='8px 8px 0px 0px rgba(0, 0, 0, 0.1)';">
+                    <h3 id="projecttitle"><a href="/projects/<%= project._id %>" ><%= project.name %></a></h3>
+                    <p ><%= project.description %></p>
+                    <small>Creator: <%= project.creator.name %></small>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</div>
+
+<%- include('../partials/footer') %>

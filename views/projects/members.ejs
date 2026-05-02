@@ -1,0 +1,66 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<div class="container" style="display: block;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>Members of <%= project.name %></h2>
+        <a href="/projects/<%= project._id %>" class="btn">Back to Project</a>
+    </div>
+
+    <div style="display: flex; gap: 20px; justify-content: center; align-items: center;">
+    <div class="card">
+        <h3>Project Admin</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li style="padding: 10px; border-bottom: 1px solid #ddd;">
+                <strong><%= project.creator.name %></strong> (<%= project.creator.email %>)
+            </li>
+        </ul>
+
+        <h3 style="margin-top: 20px;">Team Members</h3>
+        <% if (project.members.length === 0) { %>
+            <p>No members added yet.</p>
+        <% } else { %>
+            <ul style="list-style: none; padding: 0;">
+                <% project.members.forEach(member => { %>
+                    <li style="padding: 10px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong><%= member.name %></strong> (<%= member.email %>)
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: center;">
+                            <div>
+
+                                <a href="/projects/<%= project._id %>/members/<%= member._id %>/tasks" class="btn" >View Tasks</a>
+                            </div>
+                            <% if (isAdmin) { %>
+                                <form action="/projects/<%= project._id %>/members/<%= member._id %>?_method=DELETE" method="POST" style="display: inline;">
+                                    <button class="btn btn-danger"  onclick="return confirm('Remove member?');">Remove</button>
+                                </form>
+                            <% } %>
+                        </div>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
+    </div>
+
+    <% if (isAdmin) { %>
+        <div class="card" style="margin-top: 20px;">
+            <h3>Add New Member</h3>
+            <% if (availableUsers.length === 0) { %>
+                <p>No available users to add.</p>
+            <% } else { %>
+                <form action="/projects/<%= project._id %>/members" method="POST" style="margin-top: 15px; display: flex; gap: 10px;">
+                    <select name="userId" class="form-control" style="flex: 1; padding: 10px; border-radius: var(--border-radius); border: 1px solid #ccc;">
+                        <% availableUsers.forEach(user => { %>
+                            <option value="<%= user._id %>"><%= user.name %> (<%= user.email %>)</option>
+                        <% }) %>
+                    </select>
+                    <button type="submit" class="btn">Add Member</button>
+                </form>
+            <% } %>
+        </div>
+    <% } %>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

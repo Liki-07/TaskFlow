@@ -1,0 +1,92 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<div class="container" style="display: block;">
+    <h1 style="margin-bottom: 20px;">Dashboard</h1>
+    
+    <div class="dashboard-grid" >
+       
+        <div class="stat-card">
+            <h3>Total Tasks</h3>
+            <p style="font-size: 2rem; font-weight: bold; color: var(--primary-color);"><%= stats.totalTasks %></p>
+        </div>
+        <div class="stat-card">
+            <h3>To Do</h3>
+            <p style="font-size: 2rem; font-weight: bold; color: var(--warning-color);"><%= stats.todo %></p>
+        </div>
+        <div class="stat-card">
+            <h3>In Progress</h3>
+            <p style="font-size: 2rem; font-weight: bold; color: var(--primary-color);"><%= stats.inProgress %></p>
+        </div>
+        <div class="stat-card">
+            <h3>Done</h3>
+            <p style="font-size: 2rem; font-weight: bold; color: var(--success-color);"><%= stats.done %></p>
+        </div>
+    </div>
+    
+    <div style="display: flex; gap: 70px; margin-top: 40px;">
+        <!-- Pie Chart Section -->
+        <div class="card" style="flex: 1; min-width: 300px; display: flex; flex-direction: column; align-items: center;">
+            <h2 style="margin-bottom: 20px;">Task Distribution</h2>
+            <div style="width: 100%; max-width: 300px;">
+                <canvas id="taskPieChart"></canvas>
+            </div>
+        </div>
+
+        <!-- User Tasks Grid Section -->
+        <div style="flex: 2; min-width: 400px;">
+            <h2 style="margin-bottom: 20px;">My Assigned Tasks</h2>
+            <% if (userTasks && userTasks.length > 0) { %>
+                <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                    <% userTasks.forEach(task => { %>
+                        <div class="card" style="transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';">
+                            <h4 style="margin-bottom: 10px;"><%= task.title %></h4>
+                            <p style="font-size: 0.9rem; color: #555; margin-bottom: 10px;"><%= task.description || 'No description' %></p>
+                            <div style="font-size: 0.85rem;">
+                                <p><strong>Project:</strong> <a href="/projects/<%= task.project._id %>"><%= task.project.name %></a></p>
+                                <p><strong>Status:</strong> <span style="background: #eee; padding: 2px 6px; border-radius: 4px;"><%= task.status %></span></p>
+                                <p><strong>Due Date:</strong> <span style="color: <%= (new Date(task.dueDate) < new Date() && task.status !== 'Done') ? 'red' : 'inherit' %>"><%= task.dueDate ? new Date(task.dueDate).toDateString() : 'No date set' %></span></p>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <p>You have no tasks assigned to you right now.</p>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      
+        const ctx = document.getElementById('taskPieChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['To Do', 'In Progress', 'Done'],
+                datasets: [{
+                    data: [<%= stats.todo %>, <%= stats.inProgress %>, <%= stats.done %>],
+                    backgroundColor: [
+                        '#e6941a', // warning-color
+                        '#0c172bf0', // primary-color
+                        '#28ff0bcc' // success-color
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<%- include('partials/footer') %>

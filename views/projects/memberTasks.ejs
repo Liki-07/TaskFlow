@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<div class="container" style="max-width: 800px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>Tasks for <%= member.name %> in <%= project.name %></h2>
+        <a href="/projects/<%= project._id %>/members" class="btn">Back to Members</a>
+    </div>
+
+    <div class="card">
+        <% if (tasks.length === 0) { %>
+            <p>No tasks assigned to this member.</p>
+        <% } else { %>
+            <ul style="list-style: none; padding: 0;">
+                <% tasks.forEach(task => { %>
+                    <li style="padding: 15px; border-bottom: 1px solid #ddd;">
+                        <h4><%= task.title %> <span style="font-size: 0.8rem; padding: 2px 6px; border-radius: 4px; background: #eee; margin-left: 10px;"><%= task.status %></span></h4>
+                        <p style="margin: 5px 0;"><%= task.description %></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            <strong>Priority:</strong> <%= task.priority %> |
+                            <strong>Due:</strong> <%= task.dueDate ? new Date(task.dueDate).toDateString() : 'N/A' %>
+                        </p>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
