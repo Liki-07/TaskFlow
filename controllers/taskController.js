@@ -32,6 +32,7 @@ exports.createTask = async (req, res) => {
 
 exports.editTask = async (req, res) => {
     try {
+        
         const task = await Task.findById(req.params.taskId);
         res.render('tasks/edit', { task, user: req.session.user });
     } catch (err) {

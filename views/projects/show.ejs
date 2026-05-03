@@ -1,7 +1,7 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
-<div class="container" style="display: block;">
+<div class="container" style="display: block; height: 100vh; ">
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
         <div>
@@ -9,7 +9,7 @@
             <p style="color:#666;"><%= project.description %></p>
         </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; ">
             <% if (isAdmin) { %>
                 <div>
 
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <h2>Task Board</h2>
+    <h2 style="margin-bottom: 15px;">Task Board</h2>
 
     <div class="task-board">
 
@@ -55,7 +55,7 @@
                         <p style="color:red;">⚠ Overdue</p>
                     <% } %>
 
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 10px;">
                         <% if (isAdmin || task.assignedTo?._id.toString() === user._id.toString()) { %>
                             <div>
 

@@ -6,7 +6,7 @@
   --success-color: #1ba309cc;
   --warning-color: #8d5d16;
   --border-radius: 8px;
-  --box-shadow: 8px 8px 0px 0px rgb(0 0 0 / 10%);
+  --box-shadow: 9px 12px 10px 0px rgb(0 0 0 / 10%);
 }
 
 * {
@@ -37,6 +37,7 @@ a {
   justify-content: center;
   align-items: center;
   padding: 30px;
+  margin-top: 80px;
 }
 
 /* Navbar */
@@ -47,6 +48,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position:fixed;top:0;left:0;right:0;z-index:99;
 }
 
 .navbar a {
@@ -54,11 +56,18 @@ a {
   margin-left: 15px;
 }
 
-.navbar .brand {
+.navbar .brand{
   font-size: 1.5rem;
   font-weight: bold;
+  
 }
 
+.nav-links *:hover{
+ transform: scale(1.1);
+  background-color: #ffffff1c;
+  border-radius: var(--border-radius);
+  padding: 5px 10px;
+}
 /* Cards & Forms */
 .card {
   background: white;
@@ -66,6 +75,24 @@ a {
   box-shadow: var(--box-shadow);
   padding: 20px;
   margin-bottom: 20px;
+  
+  
+}
+.projectCard{
+ display: flex; flex-direction:column;
+  align-items: start;
+  gap: 10px;
+
+  justify-content:center; transition: all 0.3s ease;
+}
+.cardDashboard {
+  background: var(--secondary-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 5px;
+  margin-bottom: 10px;
+   width: 300px;
+ 
 }
 
 .card *{
@@ -77,16 +104,18 @@ a {
   margin-bottom: 10px;
   border-radius: var(--border-radius);
   font-weight: 800;
+  
 }
 #projecttitle:hover{
 background-color: #7094d5f0;
   
 }
 .card>p{
-  background-color: var(--secondary-color);
+  
   padding: 10px;
   margin-bottom: 10px;
   border-radius: var(--border-radius);
+  border-left: 4px solid var(--primary-color);
   
 }
 .card>small{
@@ -187,3 +216,13 @@ background-color: #7094d5f0;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
 }
+
+
+footer{
+  
+  background:#080e1a;display:flex;align-items:center;justify-content:space-between;padding:28px 6%;flex-wrap:wrap;gap:12px}
+footer .logo{font-size:1rem}
+footer ul{display:flex;gap:24px;list-style:none}
+footer a{color:rgba(255,255,255,.28);font-size:.8rem;transition:color .2s}
+footer a:hover{color:var(--warning-color)}
+footer span{color:rgba(255,255,255,.2);font-size:.75rem}

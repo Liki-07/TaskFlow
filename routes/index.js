@@ -4,12 +4,16 @@ const Task = require('../models/Task');
 const Project = require('../models/Project');
 const { isAuthenticated } = require('../middleware/auth');
 
+
+
 router.get('/', (req, res) => {
     if (req.session && req.session.user) {
         return res.redirect('/dashboard');
     }
     res.redirect('/auth/login');
 });
+
+
 router.get('/dashboard', isAuthenticated, async (req, res) => {
     try {
         const userId = req.session.user._id;

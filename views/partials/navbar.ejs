@@ -1,9 +1,11 @@
 <nav class="navbar">
     <div class="brand">
-        <a href="/">TaskMaster</a>
+        <a href="/">TaskFlow</a>
     </div>
     <div class="nav-links">
         <% if (locals.user) { %>
+            <% console.log("user", user) %>
+            
             <a href="/dashboard">Dashboard</a>
             <a href="/projects">Projects</a>
             <span style="margin-left: 15px;">Welcome, <%= user.name %>!</span>

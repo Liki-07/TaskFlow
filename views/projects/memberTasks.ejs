@@ -1,7 +1,7 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
-<div class="container" style="max-width: 800px;">
+<div class="container" style="max-width: 800px; height: 100vh;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h2>Tasks for <%= member.name %> in <%= project.name %></h2>
         <a href="/projects/<%= project._id %>/members" class="btn">Back to Members</a>

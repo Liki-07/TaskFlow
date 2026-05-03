@@ -26,7 +26,7 @@
     
     <div style="display: flex; gap: 70px; margin-top: 40px;">
         <!-- Pie Chart Section -->
-        <div class="card" style="flex: 1; min-width: 300px; display: flex; flex-direction: column; align-items: center;">
+        <div class="card" style="flex: 1; min-width: 300px; display: flex; flex-direction: column; align-items: center; height: fit-content; border-top: 4px solid var(--primary-color);">
             <h2 style="margin-bottom: 20px;">Task Distribution</h2>
             <div style="width: 100%; max-width: 300px;">
                 <canvas id="taskPieChart"></canvas>
@@ -34,18 +34,18 @@
         </div>
 
         <!-- User Tasks Grid Section -->
-        <div style="flex: 2; min-width: 400px;">
+        <div class="card" style="flex: 2; min-width: 400px; border-top: 4px solid var(--primary-color);">
             <h2 style="margin-bottom: 20px;">My Assigned Tasks</h2>
             <% if (userTasks && userTasks.length > 0) { %>
                 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
                     <% userTasks.forEach(task => { %>
-                        <div class="card" style="transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';">
-                            <h4 style="margin-bottom: 10px;"><%= task.title %></h4>
-                            <p style="font-size: 0.9rem; color: #555; margin-bottom: 10px;"><%= task.description || 'No description' %></p>
-                            <div style="font-size: 0.85rem;">
-                                <p><strong>Project:</strong> <a href="/projects/<%= task.project._id %>"><%= task.project.name %></a></p>
-                                <p><strong>Status:</strong> <span style="background: #eee; padding: 2px 6px; border-radius: 4px;"><%= task.status %></span></p>
-                                <p><strong>Due Date:</strong> <span style="color: <%= (new Date(task.dueDate) < new Date() && task.status !== 'Done') ? 'red' : 'inherit' %>"><%= task.dueDate ? new Date(task.dueDate).toDateString() : 'No date set' %></span></p>
+                        <div class="cardDashboard" style="padding:5px; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';">
+                            <h4 style="margin-bottom: 10px; font-weight: bold; "><%= task.title %></h4>
+                            <p style="font-size: 1.0rem; color: #383535; margin-bottom: 10px; text-wrap: wrap;"><%= task.description || 'No description' %></p>
+                            <div style="font-size: 0.85rem; border-left: 3px solid var(--warning-color); padding-left: 10px;">
+                                <p style="display: flex; justify-content: left; align-items: center; "><strong>Project:</strong> <a href="/projects/<%= task.project._id %>"><%= task.project.name %></a></p>
+                                <p style="display: flex; justify-content: left; align-items: center;"><strong >Status:</strong> <span style="background: #eee; padding: 2px 6px; border-radius: 4px;"><%= task.status %></span></p>
+                                <p style="display: flex; justify-content: left; align-items: center;" ><strong>Due Date:</strong> <span style="color: <%= (new Date(task.dueDate) < new Date() && task.status !== 'Done') ? 'red' : 'inherit' %>"><%= task.dueDate ? new Date(task.dueDate).toDateString() : 'No date set' %></span></p>
                             </div>
                         </div>
                     <% }) %>
