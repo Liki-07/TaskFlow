@@ -22,41 +22,44 @@ exports.index = async (req, res) => {
 }
 };
 
-
 exports.getProject = async (req, res) => {
     try {
         const projectId = req.params.id;
         const userId = req.session.user._id;
 
-        const project = await Project.findById(projectId);
+        const project = await Project.findById(projectId)
+            .populate('creator')
+            .populate('members');
 
+       
         if (!project) {
             return res.status(404).send('Project not found');
         }
 
-        // Check if user belongs to this project
+        // Membership check
         const isMember =
-            project.creator.toString() === userId ||
-            project.members.includes(userId);
+            project.creator._id.toString() === userId ||
+            project.members.some(m => m._id.toString() === userId);
 
         if (!isMember) {
             return res.status(403).send('Access denied');
         }
 
-        // Check admin (IMPORTANT)
-        const isAdmin = project.creator.toString() === userId;
+        // Admin check
+        const isAdmin = project.creator._id.toString() === userId;
 
+        // Fetch tasks
         const tasks = await Task.find({ project: projectId })
             .populate('assignedTo');
 
-        // Group tasks (clean UI)
+      
+
+        // Group tasks
         const groupedTasks = {
             todo: tasks.filter(t => t.status === 'To Do'),
             inProgress: tasks.filter(t => t.status === 'In Progress'),
             done: tasks.filter(t => t.status === 'Done')
         };
-
-        console.log("isAdmin",isAdmin)
 
         res.render('projects/show', {
             project,
@@ -70,6 +73,7 @@ exports.getProject = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
+
 
 exports.newProject = (req, res) => {
     res.render('projects/new', { user: req.session.user });

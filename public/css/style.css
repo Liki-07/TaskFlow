@@ -81,8 +81,6 @@ a {
 .projectCard{
  display: flex; flex-direction:column;
   align-items: start;
-  gap: 10px;
-
   justify-content:center; transition: all 0.3s ease;
 }
 .cardDashboard {
@@ -121,7 +119,7 @@ background-color: #7094d5f0;
 .card>small{
  
   padding: 10px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   border-radius: var(--border-radius);
 
   font-weight: 600;
@@ -216,13 +214,49 @@ background-color: #7094d5f0;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
 }
+.member-avatars{
+  display:flex;
+  gap:3px;
+  
+}
+.circle {
+width: 30px;
+  height: 30px;
+  background-color: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  padding:0 10px;
+  
+}
+.nameCard {
 
-
+  height: 30px;
+  background-color: var(--warning-color);
+  color: white;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  padding:0 10px;
+  
+}
+.nameCard:hover{
+  background-color: var(--primary-color);
+  cursor: pointer;
+ 
+}
 footer{
   
   background:#080e1a;display:flex;align-items:center;justify-content:space-between;padding:28px 6%;flex-wrap:wrap;gap:12px}
-footer .logo{font-size:1rem}
+footer .logo{font-size:1rem;font-weight:800;color:var(--secondary-color)}
 footer ul{display:flex;gap:24px;list-style:none}
-footer a{color:rgba(255,255,255,.28);font-size:.8rem;transition:color .2s}
+footer a{color:rgba(255, 255, 255, 0.751);font-size:.8rem;transition:color .2s}
 footer a:hover{color:var(--warning-color)}
-footer span{color:rgba(255,255,255,.2);font-size:.75rem}
+footer span{color:rgba(255, 255, 255, 0.759);font-size:.75rem}

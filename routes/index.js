@@ -49,9 +49,10 @@ router.get('/dashboard', isAuthenticated, async (req, res) => {
         // Step 4: Get tasks assigned to current user
         const userTasks = await Task.find({
             project: { $in: projectIds },
-            assignedTo: userId
+            assignedTo: userId,
+            status: { $ne: 'Done' } 
         }).populate('project');
-
+ 
         res.render('dashboard', { stats, userTasks, user: req.session.user });
 
     } catch (err) {
